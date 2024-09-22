@@ -6,8 +6,8 @@ module "vpn_dev" {
   vpc_id                = module.vpc_dev.vpc_id            # Change if using your own IaC / existing network
   wireguard_port        = "64731"                          # Should be a new, random port per WireGuard server
   wireguard_ip_address  = "192.168.2.2/32"                 # Should be an unused IP in the range 192.168.2.0/16
-  wireguard_public_key  = "wE+zcrM+yuzqSgMZJCb5+iLgRxD9DGWquiSgrLJAa3U="        # Generate this and the below using the script provided in this repository
-  wireguard_private_key = "H2LKIZmlOoehrgw6nkkm6mVkIe4rlcRtiziGulTxv1E="
+  wireguard_public_key  = "GENERATE_ME_WITH_SCRIPT"        # Generate this and the below using the script provided in this repository
+  wireguard_private_key = "GENERATE_ME_WITH_SCRIPT"
   region = var.region
 }
 
@@ -19,7 +19,7 @@ module "vpn_stage" {
   vpc_id                = module.vpc_stage.vpc_id            # Change if using your own IaC / existing network
   wireguard_port        = "64729"                            # Should be a new, random port per WireGuard server
   wireguard_ip_address  = "192.168.2.3/32"                   # Should be an unused IP in the range 192.168.2.0/16
-  wireguard_public_key  = "+JxiRCVWZsH/H03hPoaOvwgMA0wJr6Gm1NzlZKWrJFM="          # Generate this and the below using the script provided in this repository
-  wireguard_private_key = "kxnAaeLdv3jGkQ43dmpfxbv5nEylhFOlK7FftOeJBCs="
+  wireguard_public_key  = "GENERATE_ME_WITH_SCRIPT"          # Generate this and the below using the script provided in this repository
+  wireguard_private_key = "GENERATE_ME_WITH_SCRIPT"
   region                = var.region
 }

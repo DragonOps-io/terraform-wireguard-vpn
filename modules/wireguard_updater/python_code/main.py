@@ -28,7 +28,7 @@ def handle_stream_updates(event, context):
                     print(f'Environment {a} not found in config_files_map')
 
             if len(removed_envs) == 0 and len(added_envs) == 0:
-                # This only happens when the environments haven't changed by the key has. This means it can't be a
+                # This only happens when the environments haven't changed but the key has. This means it can't be a
                 # new client.
                 config_files_map = helpers.update_public_key(old_image, new_image, config_files_map)
 

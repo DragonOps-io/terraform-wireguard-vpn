@@ -44,11 +44,23 @@ module "handle_stream_updates_lambda" {
           "dynamodb:ListStreams"
       ],
       resources = [ module.wireguard_updater_table.dynamodb_table_stream_arn]
+    },
+    ssm_access = {
+       effect    = "Allow",
+       actions   = [
+        "ssm:SendCommand",
+        "ssm:PutParameter",
+        "ssm:GetParameter",
+        "ssm:GetCommandInvocation",
+        "ssm:AddTagsToResource"
+      ],
+      resources = ["*"]
     }
   }
 
   environment_variables = {
     ENVIRONMENT_MAP = local.vpn_environment_map_json
+    DYNAMODB_TABLE_NAME = split("/", module.wireguard_updater_table.dynamodb_table_arn)[1]
   }
 
   source_path = "./modules/wireguard_updater/python_code"
@@ -96,6 +108,7 @@ module "add_new_client_lambda" {
 
   environment_variables = {
     ENVIRONMENT_MAP = local.vpn_environment_map_json
+    DYNAMODB_TABLE_NAME = split("/", module.wireguard_updater_table.dynamodb_table_arn)[1]
   }
 
   tags = {
@@ -117,6 +130,7 @@ module "get_client_config_file_lambda" {
 
   environment_variables = {
     ENVIRONMENT_MAP = local.vpn_environment_map_json
+    DYNAMODB_TABLE_NAME = split("/", module.wireguard_updater_table.dynamodb_table_arn)[1]
   }
 
   attach_policy_statements = true

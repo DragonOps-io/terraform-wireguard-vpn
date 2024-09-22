@@ -109,6 +109,8 @@ def send_commands(config_files_map, instance_id_map):
                         f'echo -e "$config" | sudo tee /etc/wireguard/wg0.conf > /dev/null',
                         "sudo systemctl reload wg-quick@wg0",
                         "sudo systemctl restart wg-quick@wg0",
+                        "sudo iptables -t nat -A POSTROUTING -o ens5 -j MASQUERADE",
+                        "sudo iptables -A FORWARD -i wg0 -j ACCEPT"
                     ]
                 }
             )

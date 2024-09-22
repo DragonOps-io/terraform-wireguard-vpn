@@ -18,8 +18,6 @@ locals {
   config_file = "[Interface]\nAddress = ${var.wireguard_ip_address}\nListenPort = ${var.wireguard_port}\nPrivateKey = ${var.wireguard_private_key}"
 }
 
-# TODO check the ens5 v sudo iptables -t nat -A POSTROUTING -o enX0 -j MASQUERADE
-# TODO how do we get the private key/public key in there the first time? Maybe in the lambda function?
 resource "aws_instance" "vpn" {
   ami                    = data.aws_ami.amazon_linux.id
   instance_type          = "t3.micro"
@@ -31,7 +29,8 @@ resource "aws_instance" "vpn" {
     sudo dnf install wireguard-tools -y
     sudo dnf install iptables -y
     sudo mkdir /etc/wireguard/
-    ${var.wireguard_private_key} | sudo tee /etc/wireguard/privatekey | ${var.wireguard_public_key} | sudo tee /etc/wireguard/publickey
+    echo -e '${var.wireguard_private_key}' | sudo tee /etc/wireguard/privatekey
+    echo -e '${var.wireguard_public_key}' | sudo tee /etc/wireguard/publickey
     echo 'net.ipv4.ip_forward=1' | sudo tee -a /etc/sysctl.d/10-wireguard.conf
     echo 'net.ipv6.conf.all.forwarding=1' | sudo tee -a /etc/sysctl.d/10-wireguard.conf
     sudo sysctl -p /etc/sysctl.d/10-wireguard.conf
