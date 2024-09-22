@@ -8,7 +8,7 @@ module "vpn_dev" {
   wireguard_ip_address  = "192.168.2.2/32"                 # Should be an unused IP in the range 192.168.2.0/16
   wireguard_public_key  = "GENERATE_ME_WITH_SCRIPT"        # Generate this and the below using the script provided in this repository
   wireguard_private_key = "GENERATE_ME_WITH_SCRIPT"
-  region = var.region
+  region                = var.region
 }
 
 module "vpn_stage" {

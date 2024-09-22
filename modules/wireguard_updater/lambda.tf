@@ -36,18 +36,18 @@ module "handle_stream_updates_lambda" {
   attach_policy_statements = true
   policy_statements = {
     dynamodb_stream = {
-      effect    = "Allow",
-      actions   = [
-          "dynamodb:DescribeStream",
-          "dynamodb:GetRecords",
-          "dynamodb:GetShardIterator",
-          "dynamodb:ListStreams"
+      effect = "Allow",
+      actions = [
+        "dynamodb:DescribeStream",
+        "dynamodb:GetRecords",
+        "dynamodb:GetShardIterator",
+        "dynamodb:ListStreams"
       ],
-      resources = [ module.wireguard_updater_table.dynamodb_table_stream_arn]
+      resources = [module.wireguard_updater_table.dynamodb_table_stream_arn]
     },
     ssm_access = {
-       effect    = "Allow",
-       actions   = [
+      effect = "Allow",
+      actions = [
         "ssm:SendCommand",
         "ssm:PutParameter",
         "ssm:GetParameter",
@@ -59,7 +59,7 @@ module "handle_stream_updates_lambda" {
   }
 
   environment_variables = {
-    ENVIRONMENT_MAP = local.vpn_environment_map_json
+    ENVIRONMENT_MAP     = local.vpn_environment_map_json
     DYNAMODB_TABLE_NAME = split("/", module.wireguard_updater_table.dynamodb_table_arn)[1]
   }
 
@@ -84,17 +84,17 @@ module "add_new_client_lambda" {
   attach_policy_statements = true
   policy_statements = {
     dynamodb_item = {
-      effect    = "Allow",
-      actions   = [
+      effect = "Allow",
+      actions = [
         "dynamodb:GetItem",
         "dynamodb:PutItem",
         "dynamodb:Scan"
       ],
-      resources = [ module.wireguard_updater_table.dynamodb_table_arn]
+      resources = [module.wireguard_updater_table.dynamodb_table_arn]
     },
-     ssm_access = {
-       effect    = "Allow",
-       actions   = [
+    ssm_access = {
+      effect = "Allow",
+      actions = [
         "ssm:SendCommand",
         "ssm:PutParameter",
         "ssm:GetParameter",
@@ -107,7 +107,7 @@ module "add_new_client_lambda" {
 
 
   environment_variables = {
-    ENVIRONMENT_MAP = local.vpn_environment_map_json
+    ENVIRONMENT_MAP     = local.vpn_environment_map_json
     DYNAMODB_TABLE_NAME = split("/", module.wireguard_updater_table.dynamodb_table_arn)[1]
   }
 
@@ -129,24 +129,24 @@ module "get_client_config_file_lambda" {
   source_path = "./modules/wireguard_updater/python_code"
 
   environment_variables = {
-    ENVIRONMENT_MAP = local.vpn_environment_map_json
+    ENVIRONMENT_MAP     = local.vpn_environment_map_json
     DYNAMODB_TABLE_NAME = split("/", module.wireguard_updater_table.dynamodb_table_arn)[1]
   }
 
   attach_policy_statements = true
   policy_statements = {
-      dynamodb_item = {
-      effect    = "Allow",
-      actions   = [
+    dynamodb_item = {
+      effect = "Allow",
+      actions = [
         "dynamodb:GetItem",
         "dynamodb:PutItem",
         "dynamodb:Scan"
       ],
-      resources = [ module.wireguard_updater_table.dynamodb_table_arn]
+      resources = [module.wireguard_updater_table.dynamodb_table_arn]
     },
-     ssm_access = {
-       effect    = "Allow",
-       actions   = [
+    ssm_access = {
+      effect = "Allow",
+      actions = [
         "ssm:SendCommand",
         "ssm:PutParameter",
         "ssm:GetParameter",

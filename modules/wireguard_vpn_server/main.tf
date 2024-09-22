@@ -132,8 +132,8 @@ resource "aws_ssm_parameter" "wireguard_config_file" {
   type  = "SecureString"
   value = local.config_file
   lifecycle {
-     ignore_changes = [
-    value
-  ]
+    ignore_changes = [
+      value
+    ]
   }
 }

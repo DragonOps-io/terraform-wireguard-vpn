@@ -3,7 +3,7 @@ resource "aws_instance" "private_instance_dev" {
   ami                         = data.aws_ami.amazon_linux.id
   instance_type               = "t3.micro"
   subnet_id                   = module.vpc_dev.private_subnets[0]
-  vpc_security_group_ids = [aws_security_group.private_sg_dev.id]
+  vpc_security_group_ids      = [aws_security_group.private_sg_dev.id]
   associate_public_ip_address = false
 
   tags = {
@@ -42,7 +42,7 @@ resource "aws_instance" "private_instance_stage" {
   ami                         = data.aws_ami.amazon_linux.id
   instance_type               = "t3.micro"
   subnet_id                   = module.vpc_stage.private_subnets[0]
-  vpc_security_group_ids = [aws_security_group.private_sg_stage.id]
+  vpc_security_group_ids      = [aws_security_group.private_sg_stage.id]
   associate_public_ip_address = false
 
   tags = {
